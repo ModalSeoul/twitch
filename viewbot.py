@@ -23,11 +23,11 @@ class Twitch:
 
     def scan_channel(self, channel):
         chatters = self.get_chatters(channel)
-        outfile = open('')
+        outfile = open(channel, 'w+')
         for chatter in chatters:
             user = self.request_user(chatter)
             if user:
-                user = user['created_at']
+                outfile.write('{}{}'.format(user['created_at'], '\n'))
 
 twitch = Twitch('your_oauth')
 twitch.scan_channel('nahj')
