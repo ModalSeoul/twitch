@@ -25,9 +25,18 @@ class Twitch:
         chatters = self.get_chatters(channel)
         outfile = open(channel, 'w+')
         for chatter in chatters:
-            user = self.request_user(chatter)
+            user = self.parse_date(self.request_user(chatter)['created_at'])
             if user:
-                outfile.write('{}{}'.format(user['created_at'], '\n'))
+                outfile.write('{}{}'.format(user, '\n'))
 
-twitch = Twitch('your_oauth')
-twitch.scan_channel('nahj')
+    # ---------
+    # Utility
+    # ---------
+
+    def parse_date(self, str_date):
+        return str_date.split('T')[0]
+
+if __name__ == '__main__':
+    channel = input('Enter channel to scan\n--------\n')
+    twitch = Twitch('your_oauth')
+    twitch.scan_channel(channel)
