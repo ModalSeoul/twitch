@@ -29,7 +29,7 @@ class Twitch:
         for indx, chatter in enumerate(chatters):
             user = self.parse_date(self.request_user(chatter)['created_at'])
             if user:
-                outfile.write('{}{}'.format(user, '\n'))
+                self.outfile.write('{}{}'.format(user, '\n'))
                 print(indx)
         self.evaluate_scan(channel)
 
@@ -41,6 +41,7 @@ class Twitch:
             for entry in entries:
                 if entry in evaluation:
                     evaluation[entry] += 1
+                    print('Duplicate entry found! %s' % evaluation[entry])
                 else:
                     evaluation[entry] = 1
 
